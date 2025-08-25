@@ -1,3 +1,5 @@
+import { Carousel } from './carousel';
+
 export function Promotion() {
   return (
     <div className="relative flex items-center justify-center w-full overflow-hidden bg-gradient-primary">
@@ -13,8 +15,10 @@ export function Promotion() {
           <div className="absolute bottom-1/3 left-1/4 w-32 h-0.5 bg-white/10 transform rotate-15"></div>
         </div>
 
-        <div className="relative z-10 w-full max-w-2xl min-h-[545.5px]">
-          <div className="relative w-full">{/* Carousel Here */}</div>
+        <div className="relative z-10 w-full max-w-2xl">
+          <div className="relative w-full">
+            <Carousel />
+          </div>
         </div>
       </div>
 
