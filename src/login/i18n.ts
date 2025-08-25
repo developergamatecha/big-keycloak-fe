@@ -12,6 +12,7 @@ const { useI18n, ofTypeI18n } = i18nBuilder
       username: 'Username',
       usernameOrEmail: 'Username atau email',
       email: 'Email',
+      doLogIn: 'Log In',
     },
   })
   .build();
