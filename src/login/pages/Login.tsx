@@ -91,14 +91,14 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
             >
               {!usernameHidden && (
                 <div className="space-y-2">
-                  <label htmlFor="username" className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium text-foreground">
+                  <label htmlFor="username" className="text-sm font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-foreground">
                     {!realm.loginWithEmailAllowed ? msg('username') : !realm.registrationEmailAsUsername ? msg('usernameOrEmail') : msg('email')}
                     <span className="text-red-500"> *</span>
                   </label>
                   <input
                     tabIndex={2}
                     id="username"
-                    className="flex h-10 bg-background text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="flex w-full h-10 px-3 py-2 text-base border border-gray-300 rounded-lg bg-background ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     name="username"
                     defaultValue={login.username ?? ''}
                     placeholder="Masukkan username atau email Anda"
@@ -110,7 +110,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
                   {messagesPerField.existsError('username', 'password') && (
                     <span
                       id="input-error"
-                      className="inline-block text-red-500 mt-2"
+                      className="inline-block mt-2 text-red-500"
                       aria-live="polite"
                       dangerouslySetInnerHTML={{
                         __html: kcSanitize(messagesPerField.getFirstError('username', 'password')),
@@ -121,7 +121,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
               )}
 
               <div className="space-y-2">
-                <label htmlFor="password" className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium text-foreground">
+                <label htmlFor="password" className="text-sm font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-foreground">
                   {msg('password')}
                   <span className="text-red-500"> *</span>
                 </label>
@@ -129,7 +129,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
                   <input
                     tabIndex={3}
                     id="password"
-                    className="flex h-10 bg-background text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="flex w-full h-10 px-3 py-2 pr-10 text-base border border-gray-300 rounded-lg bg-background ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     name="password"
                     type="password"
                     placeholder="Masukkan password Anda"
@@ -140,7 +140,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
                 {usernameHidden && messagesPerField.existsError('username', 'password') && (
                   <span
                     id="input-error"
-                    className="inline-block text-red-500 mt-2"
+                    className="inline-block mt-2 text-red-500"
                     aria-live="polite"
                     dangerouslySetInnerHTML={{
                       __html: kcSanitize(messagesPerField.getFirstError('username', 'password')),
@@ -153,8 +153,15 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
                 <div id="kc-form-options">
                   {realm.rememberMe && !usernameHidden && (
                     <div>
-                      <label className="inline-flex gap-2 items-center">
-                        <input tabIndex={5} id="rememberMe" name="rememberMe" type="checkbox" defaultChecked={!!login.rememberMe} className="!m-0" />
+                      <label className="inline-flex items-center gap-2">
+                        <input
+                          tabIndex={5}
+                          id="rememberMe"
+                          name="rememberMe"
+                          type="checkbox"
+                          defaultChecked={!!login.rememberMe}
+                          className="!m-0 w-4 h-4"
+                        />
                         <span>{msg('rememberMe')}</span>
                       </label>
                     </div>
@@ -215,12 +222,12 @@ function PasswordWrapper(props: { kcClsx: KcClsx; i18n: I18n; passwordInputId: s
       {children}
       <button
         type="button"
-        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+        className="absolute text-gray-400 transition-colors transform -translate-y-1/2 right-3 top-1/2 hover:text-gray-600"
         aria-label={msgStr(isPasswordRevealed ? 'hidePassword' : 'showPassword')}
         aria-controls={passwordInputId}
         onClick={toggleIsPasswordRevealed}
       >
-        {isPasswordRevealed ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+        {isPasswordRevealed ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
       </button>
     </div>
   );
