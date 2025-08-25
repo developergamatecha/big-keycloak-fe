@@ -4,8 +4,56 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 220 96% 35%;
+  --primary-foreground: 0 0% 100%;
+  --primary-glow: 220 96% 40%;
+  --button-primary: 48 100% 69%;
+  --button-primary-foreground: 220 96% 35%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 249 100% 64%;
+  --gradient-primary: linear-gradient(
+    135deg,
+    hsl(220 96% 35%),
+    hsl(220 96% 40%)
+  );
+  --gradient-hero: linear-gradient(135deg, hsl(220 96% 35%), hsl(220 96% 40%));
+  --shadow-brand: 0 4px 14px 0 hsl(220 96% 35% / 0.15);
+  --shadow-elevated: 0 10px 40px hsl(220 96% 35% / 0.1);
+  --gray-50: 248 50% 98%;
+  --gray-100: 248 30% 95%;
+  --gray-600: 215 14% 34%;
+  --gray-400: 215 14% 60%;
+  --radius: 0.5rem;
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+}
+
 body.kcBodyClass {
-  @apply bg-[url(./assets/img/background.jpg)] bg-no-repeat bg-center bg-fixed;
+  @apply bg-none;
+  @apply bg-white;
+
   @apply font-geist;
 }
 
