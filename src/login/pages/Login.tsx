@@ -1,9 +1,10 @@
-import { useState, useEffect, useReducer } from 'react';
 import { kcSanitize } from 'keycloakify/lib/kcSanitize';
+import { getKcClsx, type KcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { PageProps } from 'keycloakify/login/pages/PageProps';
 import { assert } from 'keycloakify/tools/assert';
 import { clsx } from 'keycloakify/tools/clsx';
-import type { PageProps } from 'keycloakify/login/pages/PageProps';
-import { getKcClsx, type KcClsx } from 'keycloakify/login/lib/kcClsx';
+import { Eye, EyeOff } from 'lucide-react';
+import { useEffect, useReducer, useState } from 'react';
 import type { KcContext } from '../KcContext';
 import type { I18n } from '../i18n';
 
@@ -28,14 +29,18 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
       doUseDefaultCss={doUseDefaultCss}
       classes={classes}
       displayMessage={!messagesPerField.existsError('username', 'password')}
-      headerNode={msg('loginAccountTitle')}
+      headerNode={<></>}
       displayInfo={realm.password && realm.registrationAllowed && !registrationDisabled}
       infoNode={
         <div id="kc-registration-container">
           <div id="kc-registration">
-            <span>
+            <span className="text-gray-600">
               {msg('noAccount')}{' '}
-              <a tabIndex={8} href={url.registrationUrl}>
+              <a
+                tabIndex={8}
+                href={url.registrationUrl}
+                className="text-primary hover:!text-primaryGlow hover:!no-underline font-medium transition-colors"
+              >
                 {msg('doRegister')}
               </a>
             </span>
@@ -82,18 +87,21 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
               }}
               action={url.loginAction}
               method="post"
+              className="space-y-6"
             >
               {!usernameHidden && (
-                <div className={kcClsx('kcFormGroupClass')}>
-                  <label htmlFor="username" className={kcClsx('kcLabelClass')}>
+                <div className="space-y-2">
+                  <label htmlFor="username" className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium text-foreground">
                     {!realm.loginWithEmailAllowed ? msg('username') : !realm.registrationEmailAsUsername ? msg('usernameOrEmail') : msg('email')}
+                    <span className="text-red-500"> *</span>
                   </label>
                   <input
                     tabIndex={2}
                     id="username"
-                    className={kcClsx('kcInputClass')}
+                    className="flex h-10 bg-background text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     name="username"
                     defaultValue={login.username ?? ''}
+                    placeholder="Masukkan username atau email Anda"
                     type="text"
                     autoFocus
                     autoComplete="username"
@@ -102,7 +110,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
                   {messagesPerField.existsError('username', 'password') && (
                     <span
                       id="input-error"
-                      className={kcClsx('kcInputErrorMessageClass')}
+                      className="inline-block text-red-500 mt-2"
                       aria-live="polite"
                       dangerouslySetInnerHTML={{
                         __html: kcSanitize(messagesPerField.getFirstError('username', 'password')),
@@ -112,17 +120,19 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
                 </div>
               )}
 
-              <div className={kcClsx('kcFormGroupClass')}>
-                <label htmlFor="password" className={kcClsx('kcLabelClass')}>
+              <div className="space-y-2">
+                <label htmlFor="password" className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium text-foreground">
                   {msg('password')}
+                  <span className="text-red-500"> *</span>
                 </label>
                 <PasswordWrapper kcClsx={kcClsx} i18n={i18n} passwordInputId="password">
                   <input
                     tabIndex={3}
                     id="password"
-                    className={kcClsx('kcInputClass')}
+                    className="flex h-10 bg-background text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     name="password"
                     type="password"
+                    placeholder="Masukkan password Anda"
                     autoComplete="current-password"
                     aria-invalid={messagesPerField.existsError('username', 'password')}
                   />
@@ -130,7 +140,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
                 {usernameHidden && messagesPerField.existsError('username', 'password') && (
                   <span
                     id="input-error"
-                    className={kcClsx('kcInputErrorMessageClass')}
+                    className="inline-block text-red-500 mt-2"
                     aria-live="polite"
                     dangerouslySetInnerHTML={{
                       __html: kcSanitize(messagesPerField.getFirstError('username', 'password')),
@@ -139,13 +149,13 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
                 )}
               </div>
 
-              <div className={kcClsx('kcFormGroupClass', 'kcFormSettingClass')}>
+              <div className={clsx('flex', realm.rememberMe && !usernameHidden ? 'justify-between' : 'justify-end')}>
                 <div id="kc-form-options">
                   {realm.rememberMe && !usernameHidden && (
-                    <div className="checkbox">
-                      <label>
-                        <input tabIndex={5} id="rememberMe" name="rememberMe" type="checkbox" defaultChecked={!!login.rememberMe} />{' '}
-                        {msg('rememberMe')}
+                    <div>
+                      <label className="inline-flex gap-2 items-center">
+                        <input tabIndex={5} id="rememberMe" name="rememberMe" type="checkbox" defaultChecked={!!login.rememberMe} className="!m-0" />
+                        <span>{msg('rememberMe')}</span>
                       </label>
                     </div>
                   )}
@@ -153,7 +163,11 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
                 <div className={kcClsx('kcFormOptionsWrapperClass')}>
                   {realm.resetPasswordAllowed && (
                     <span>
-                      <a tabIndex={6} href={url.loginResetCredentialsUrl}>
+                      <a
+                        tabIndex={6}
+                        href={url.loginResetCredentialsUrl}
+                        className="text-sm text-primary hover:!text-primaryGlow hover:!no-underline transition-colors"
+                      >
                         {msg('doForgotPassword')}
                       </a>
                     </span>
@@ -166,7 +180,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
                 <input
                   tabIndex={7}
                   disabled={isLoginButtonDisabled}
-                  className={clsx(kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonBlockClass', 'kcButtonLargeClass'), 'rounded-lg')}
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 w-full bg-button-primary hover:bg-button-primary/80 text-button-primary-foreground font-semibold py-3 rounded-lg shadow-brand transition-all duration-200 hover:shadow-elevated"
                   name="login"
                   id="kc-login"
                   type="submit"
@@ -182,7 +196,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: 'log
 }
 
 function PasswordWrapper(props: { kcClsx: KcClsx; i18n: I18n; passwordInputId: string; children: JSX.Element }) {
-  const { kcClsx, i18n, passwordInputId, children } = props;
+  const { i18n, passwordInputId, children } = props;
 
   const { msgStr } = i18n;
 
@@ -197,16 +211,16 @@ function PasswordWrapper(props: { kcClsx: KcClsx; i18n: I18n; passwordInputId: s
   }, [isPasswordRevealed]);
 
   return (
-    <div className={kcClsx('kcInputGroup')}>
+    <div className="relative">
       {children}
       <button
         type="button"
-        className={kcClsx('kcFormPasswordVisibilityButtonClass')}
+        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
         aria-label={msgStr(isPasswordRevealed ? 'hidePassword' : 'showPassword')}
         aria-controls={passwordInputId}
         onClick={toggleIsPasswordRevealed}
       >
-        <i className={kcClsx(isPasswordRevealed ? 'kcFormPasswordVisibilityIconHide' : 'kcFormPasswordVisibilityIconShow')} aria-hidden />
+        {isPasswordRevealed ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
       </button>
     </div>
   );
