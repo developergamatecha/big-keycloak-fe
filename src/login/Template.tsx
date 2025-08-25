@@ -6,6 +6,7 @@ import { clsx } from 'keycloakify/tools/clsx';
 import { useSetClassName } from 'keycloakify/tools/useSetClassName';
 import { useEffect } from 'react';
 import LogoBaharkam from './assets/img/baharkam.png';
+import { Promotion } from './components/promotion';
 import type { I18n } from './i18n';
 import type { KcContext } from './KcContext';
 
@@ -162,12 +163,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         </div>
       </div>
 
-      <div className="bg-primaryGlow p-4">
-        <p className="text-white text-base text-center">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde doloribus necessitatibus perspiciatis nostrum voluptates minus recusandae,
-          quibusdam sequi porro vitae dolores iste, quod voluptatem facere commodi illo doloremque illum modi.
-        </p>
-      </div>
+      <Promotion />
     </div>
   );
 }
