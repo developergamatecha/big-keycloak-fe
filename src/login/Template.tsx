@@ -54,14 +54,14 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
   }
 
   return (
-    <div className="grid grid-cols-2 min-h-[100svh] w-[100svw]">
-      <div className="h-full flex flex-col justify-between">
+    <div className="grid lg:grid-cols-2 min-h-[100svh] w-[100svw]">
+      <div className="flex flex-col justify-between h-full">
         <div />
 
-        <div className="p-8 flex flex-col justify-center relative">
+        <div className="relative flex flex-col justify-center p-8">
           <div className="space-y-8 w-full max-w-[28rem] mx-auto">
             <div>
-              <img src={LogoBaharkam} className="w-20 h-20 object-contain" />
+              <img src={LogoBaharkam} className="object-contain w-20 h-20" />
             </div>
 
             <div className="space-y-2">
@@ -76,7 +76,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                   const node = !(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (
                     <h1 id="kc-page-title">{headerNode}</h1>
                   ) : (
-                    <div id="kc-username" className="my-8 bg-gray-200 p-2">
+                    <div id="kc-username" className="p-2 my-8 bg-gray-200">
                       <label id="kc-attempted-username">{auth.attemptedUsername}</label>
                       <a id="reset-login" href={url.loginRestartFlowUrl} aria-label={msgStr('restartLoginTooltip')}>
                         <div className="kc-login-tooltip">
@@ -158,7 +158,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
           </div>
         </div>
 
-        <div className="bg-red-800 flex justify-start items-center p-6 text-sm text-gray-400 bg-transparent pointer-events-none">
+        <div className="flex items-center justify-start p-6 text-sm text-gray-400 bg-transparent bg-red-800 pointer-events-none">
           <p>Copyright &copy; 2023 Baharkam Polri.</p>
         </div>
       </div>
