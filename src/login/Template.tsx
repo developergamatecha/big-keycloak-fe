@@ -159,7 +159,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         </div>
 
         <div className="flex items-center justify-start p-6 text-sm text-gray-400 bg-transparent bg-red-800 pointer-events-none">
-          <p>Copyright &copy; 2023 Baharkam Polri.</p>
+          <p>Copyright &copy; 2025 Baharkam Polri.</p>
         </div>
       </div>
 
